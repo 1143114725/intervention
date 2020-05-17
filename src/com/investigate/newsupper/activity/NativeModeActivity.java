@@ -157,6 +157,7 @@ import com.investigate.newsupper.intervention.InterventionEP1;
 import com.investigate.newsupper.intervention.InterventionEP2;
 import com.investigate.newsupper.intervention.InterventionEP3;
 import com.investigate.newsupper.intervention.InterventionEP4;
+import com.investigate.newsupper.intervention.InterventionHTH;
 import com.investigate.newsupper.intervention.InterventionQjq;
 import com.investigate.newsupper.listener.OnActionListener;
 import com.investigate.newsupper.main.MainService;
@@ -2515,11 +2516,39 @@ public class NativeModeActivity extends BaseActivity implements
 		case R.id.nq_btn:
 
 			// 此处的干预是阻止用户下一页的操作
-			BaseLog.v("INTERVENTION_Y8 SURVEY_ID" + SURVEY_ID);
-			BaseLog.v("INTERVENTION_Y8 surveyId" + q.surveyId);
-			BaseLog.v("INTERVENTION_Y8 ");
-			BaseLog.v("INTERVENTION_Y8 INTERVENTION_Y8" + INTERVENTION_Y8);
-			BaseLog.v("INTERVENTION_Y8 q.qIndex" + q.qIndex);
+			
+			if (InterventionHTH.SURVEYID.equals(q.surveyId)) {
+				if (InterventionHTH.E19_b1.equals(q.qIndex + "")) {
+//					InterventionHTH.getInstance(ma, feed.getUuid()).InterventionB19B1(bodyView, handler, 111);
+					if (!IsReturnNext) {
+						String text = "您选择的额外配置/升级配置已经超过预算， 请被访者重新进行选择！";
+						DialogUtil.newdialog(NativeModeActivity.this, text);
+						return;
+					}
+				}
+				if (InterventionHTH.E19_b2.equals(q.qIndex + "")) {
+//					InterventionHTH.getInstance(ma, feed.getUuid()).InterventionB19B1(bodyView, handler, 222);
+					if (!IsReturnNext) {
+						String text = "您选择的额外配置/升级配置已经超过预算， 请被访者重新进行选择！";
+						DialogUtil.newdialog(NativeModeActivity.this, text);
+						return;
+					}
+				}
+				if (InterventionHTH.E19_b3.equals(q.qIndex + "")) {
+//					InterventionHTH.getInstance(ma, feed.getUuid()).InterventionB19B1(bodyView, handler, 333);
+					if (!IsReturnNext) {
+						String text = "您选择的额外配置/升级配置已经超过预算， 请被访者重新进行选择！";
+						DialogUtil.newdialog(NativeModeActivity.this, text);
+						return;
+					}
+				}
+				
+				
+				
+			}
+			
+			
+			
 			
 			
 
@@ -10670,7 +10699,31 @@ public class NativeModeActivity extends BaseActivity implements
 		}
 
 		// 此处的干预是为了更改用户可见UI
-		
+		if (InterventionHTH.SURVEYID.equals(q.surveyId)) {
+			if (InterventionHTH.E19_a1.equals(q.qIndex + "")) {
+				InterventionHTH.getInstance(ma, feed.getUuid()).settext(bodyView,90000);
+			}
+			if (InterventionHTH.E19_a2.equals(q.qIndex + "")) {
+				InterventionHTH.getInstance(ma, feed.getUuid()).settext(bodyView,110000);
+			}
+			if (InterventionHTH.E19_a3.equals(q.qIndex + "")) {
+				InterventionHTH.getInstance(ma, feed.getUuid()).settext(bodyView,80000);
+			}
+			
+			
+			if (InterventionHTH.E19_b1.equals(q.qIndex + "")) {
+				InterventionHTH.getInstance(ma, feed.getUuid()).InterventionB19B1(bodyView, handler, 90000);
+			}
+			if (InterventionHTH.E19_b2.equals(q.qIndex + "")) {
+				InterventionHTH.getInstance(ma, feed.getUuid()).InterventionB19B2(bodyView, handler, 110000);
+			}
+			if (InterventionHTH.E19_b3.equals(q.qIndex + "")) {
+				InterventionHTH.getInstance(ma, feed.getUuid()).InterventionB19B3(bodyView, handler, 80000);
+			}
+			
+			
+				
+		}else 
 		if (SURVEY_ID_EP1.equals(q.surveyId)) {
 			
 			if (interventionEP1 == null) {
@@ -16887,7 +16940,74 @@ public class NativeModeActivity extends BaseActivity implements
 			// 获取A11的答案
 			String a11value = "";
 			switch (msg.what) {
+			case 90000:
+				 i = (String) msg.obj;
+				// 花费的金额
+				 byemoney = msg.arg2;
+						 // 
+				 
+				 
+				 title = "B19.b1.【出示题卡】接下来，您将根据我们给到的额外/升级配置选择您所想要装配在您的车上的配置，您所选择的配置将会占用您在额外/升级配置上的预算。请根据您的需求以及价格，从下表所列配置中进行选择(多选)"
+						+ "<font color=red>" + i + "</font>";
+				 fromHtml = Html.fromHtml(title);
+				tvTitle.setText(fromHtml);
+				tvTitle_new.setText(fromHtml);
 
+				if (msg.arg1 == 0 ?false:true) {
+					IsReturnNext = true;
+				} else {
+					IsReturnNext = false;
+					String text = "您选择的额外配置/升级配置已经超过预算， 请被访者重新进行选择！";
+					DialogUtil.newdialog(NativeModeActivity.this, text);
+
+				}
+
+				
+				break;
+			case 110000:
+				 i = (String) msg.obj;
+				// 花费的金额
+				 byemoney = msg.arg2;
+
+				 title = "B19.b2.【出示题卡】接下来，您将根据我们给到的额外/升级配置选择您所想要装配在您的车上的配置，您所选择的配置将会占用您在额外/升级配置上的预算。请根据您的需求以及价格，从下表所列配置中进行选择(多选)"
+						+ "<font color=red>" + i + "</font>";
+				 fromHtml = Html.fromHtml(title);
+				tvTitle.setText(fromHtml);
+				tvTitle_new.setText(fromHtml);
+
+				if (msg.arg1 == 0 ?false:true) {
+					IsReturnNext = true;
+				} else {
+					IsReturnNext = false;
+					String text = "您选择的额外配置/升级配置已经超过预算， 请被访者重新进行选择！";
+					DialogUtil.newdialog(NativeModeActivity.this, text);
+
+				}
+
+				
+				break;
+			case 80000:
+				 i = (String) msg.obj;
+				// 花费的金额
+				 byemoney = msg.arg2;
+
+				 title = "B19.b3.【出示题卡】接下来，您将根据我们给到的额外/升级配置选择您所想要装配在您的车上的配置，您所选择的配置将会占用您在额外/升级配置上的预算。请根据您的需求以及价格，从下表所列配置中进行选择(多选)"
+						+ "<font color=red>" + i + "</font>";
+				 fromHtml = Html.fromHtml(title);
+				tvTitle.setText(fromHtml);
+				tvTitle_new.setText(fromHtml);
+
+				if (msg.arg1 == 0 ?false:true) {
+					IsReturnNext = true;
+				} else {
+					IsReturnNext = false;
+					String text = "您选择的额外配置/升级配置已经超过预算， 请被访者重新进行选择！";
+					DialogUtil.newdialog(NativeModeActivity.this, text);
+
+				}
+
+				
+				break;
 			case LEFT_SCROLL:
 				if (qs.size() - 1 > index) {
 					if (Util.StopTimeClick(q.qStopTime)) {

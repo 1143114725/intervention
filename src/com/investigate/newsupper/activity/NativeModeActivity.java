@@ -2519,9 +2519,10 @@ public class NativeModeActivity extends BaseActivity implements
 			 
 			if (InterventionHTH.SURVEYID.equals(q.surveyId)) {
 				
-				show();
+				
 				
 				if (InterventionHTH.A2.equals(q.qIndex + "")) {
+					show();
 					int state = getQuestionAnswer(MSG_NEXT, false);
 					nq_btn.postDelayed(new Runnable() {
 						

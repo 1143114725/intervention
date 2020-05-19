@@ -2516,8 +2516,29 @@ public class NativeModeActivity extends BaseActivity implements
 		case R.id.nq_btn:
 
 			// 此处的干预是阻止用户下一页的操作
-			
+			 
 			if (InterventionHTH.SURVEYID.equals(q.surveyId)) {
+				
+				show();
+				
+				if (InterventionHTH.A2.equals(q.qIndex + "")) {
+					int state = getQuestionAnswer(MSG_NEXT, false);
+					nq_btn.postDelayed(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							dismiss();
+						}
+					}, 2000);
+					if (!InterventionHTH.getInstance(ma, feed.getUuid()).A2()) {
+						String text = "请至少选择三个三分以上的选项！";
+						DialogUtil.newdialog(NativeModeActivity.this, text);
+						return;
+					}
+				}
+				
+				
 				if (InterventionHTH.E19_b1.equals(q.qIndex + "")) {
 //					InterventionHTH.getInstance(ma, feed.getUuid()).InterventionB19B1(bodyView, handler, 111);
 					if (!IsReturnNext) {
@@ -5766,6 +5787,9 @@ public class NativeModeActivity extends BaseActivity implements
 	private void nextPage(boolean isNoValidate) {
 
 		int state = getQuestionAnswer(MSG_NEXT, isNoValidate);
+
+		
+	
 		sum = 0;
 		// System.out.println("state--------->" + state);
 		// 为false就验证 不让过。

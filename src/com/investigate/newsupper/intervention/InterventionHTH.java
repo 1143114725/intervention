@@ -1,5 +1,6 @@
 package com.investigate.newsupper.intervention;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,13 +42,16 @@ public class InterventionHTH {
 	public static final String B5 = "101";
 	public static final String E19_a1 = "535";
 	public static final String E19_b1 = "536";
-	public static  int MSG_E19_b1 = 4;
-	public static final int MSG_E19_b2 = 6;
-	public static final int MSG_E19_b3 = 8;
+	public static  int MSG_E19_b1 = 536;
+	public static final int MSG_E19_b2 = 538;
+	public static final int MSG_E19_b3 = 540;
 	public static final String E19_a2 = "537";
 	public static final String E19_b2 = "538";
 	public static final String E19_a3 = "539";
 	public static final String E19_b3 = "540";
+	
+	
+	public static final String A2 = "45";
 	
 	private int surveyId;
 	private MyApp ma;
@@ -61,14 +65,19 @@ public class InterventionHTH {
 	}
 	
 	
-	
+   public static void uninstall(){
+	   mInstance  = null;
+   }
     private static InterventionHTH mInstance;
 
     public synchronized static InterventionHTH getInstance(MyApp ma, String uuid) {
 
         if (mInstance == null) {
             mInstance = new InterventionHTH(ma,uuid);
+        }else{
+        	 mInstance.uuid = uuid;
         }
+       
         return mInstance;
     }
     
@@ -79,11 +88,15 @@ public class InterventionHTH {
     	Answer ans = getAnswer(B5);
     	
     	if (ans != null) {
-    		double B5 = Double.parseDouble(ans.getAnswerMapArr().get(0).getAnswerText()) * 10000;
-		
+//    		double B5 = Double.parseDouble(ans.getAnswerMapArr().get(0).getAnswerText()) * 10000;
     		
+    		BigDecimal B5 = new BigDecimal(ans.getAnswerMapArr().get(0).getAnswerText());
+    		BigDecimal w = new BigDecimal("10000");
+    		BigDecimal result4 = new BigDecimal(type+"");
     		
-    		String anstext = new Double(B5 - type).intValue()+"";
+    		BigDecimal result3 = B5.multiply(w);
+    		BigDecimal anstext = result3.subtract(result4);
+    		
     	
     		BaseLog.v("anstext---->>" + anstext);
     		
@@ -93,7 +106,7 @@ public class InterventionHTH {
 	    		LinearLayout lac = (LinearLayout) la.getChildAt(0);// 获取第一行第一列布局
 	    		LinearLayout rightA = (LinearLayout) lac.getChildAt(1);// 获取第一行第一列右侧布局
 	    		EditText eTexta = (EditText) rightA.getChildAt(0);
-	    		eTexta.setText(anstext);
+	    		eTexta.setText((anstext.intValue())+"");
 	    		eTexta.setFocusable(false);
 	    		eTexta.setEnabled(false);
 	    	}
@@ -116,6 +129,38 @@ public class InterventionHTH {
 
 	}
 	
+	/**
+	 * true: 过
+	 * false： 不过
+	 * @return
+	 */
+	
+	public boolean A2(){
+		Answer ans = getAnswer(A2);
+		List<Integer> list = new ArrayList<Integer>();
+		for (int i = 0; i < ans.getAnswerMapArr().size(); i++) {
+			int row = ans.getAnswerMapArr().get(i).getCol();
+			list.add(row);
+		}
+		int count = 0;
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i)>=2) {
+				count ++;
+			}
+		}
+		
+		if (count >=3) {
+			return true;
+		}else{
+			return false;
+		}
+		
+		
+	}
+	
+	
+	
+	
 	
 	
 	/**
@@ -124,15 +169,24 @@ public class InterventionHTH {
 	 * @param handler
 	 * @param type
 	 */
-	public void InterventionB19B2(final LinearLayout bodyView,
+ 	public void InterventionB19B2(final LinearLayout bodyView,
 			final Handler handler, final int type) {
 
 		
 		Answer ans = getAnswer(B5);
     	
     	if (ans != null) {
-    		final double anserp4b = (Double.parseDouble(ans.getAnswerMapArr().get(0).getAnswerText()) * 10000 )- type;
-		
+//    		final double anserp4b = (Double.parseDouble(ans.getAnswerMapArr().get(0).getAnswerText()) * 10000 )- type;
+    		
+    		BigDecimal B5 = new BigDecimal(ans.getAnswerMapArr().get(0).getAnswerText());
+    		BigDecimal w = new BigDecimal("10000");
+    		BigDecimal result4 = new BigDecimal(type+"");
+    		
+    		BigDecimal result3 = B5.multiply(w);
+    		final int anserp4b = result3.subtract(result4).intValue();
+    		
+    		
+    		BaseLog.v("anserp4b = " + anserp4b);
     	
 		for (int j = 0; j < bodyView.getChildCount(); j++) {
 			if (bodyView.getChildAt(j) instanceof LinearLayout) {
@@ -458,7 +512,9 @@ public class InterventionHTH {
 											+ (int)(anserp4b - sum) + "元";
 									isreturn = 1;
 								}
-
+									BaseLog.v("isreturn = " + isreturn);
+									BaseLog.v("sum = " + sum);
+									BaseLog.v("type = " + type);
 								msg.arg1 = isreturn;
 								msg.arg2 = sum;
 								msg.what = type;
@@ -488,8 +544,14 @@ public class InterventionHTH {
 Answer ans = getAnswer(B5);
     	
     	if (ans != null) {
-    		final double anserp4b = (Double.parseDouble(ans.getAnswerMapArr().get(0).getAnswerText()) * 10000 )- type;
-		
+//    		final double anserp4b = (Double.parseDouble(ans.getAnswerMapArr().get(0).getAnswerText()) * 10000 )- type;
+    		BigDecimal B5 = new BigDecimal(ans.getAnswerMapArr().get(0).getAnswerText());
+    		BigDecimal w = new BigDecimal("10000");
+    		BigDecimal result4 = new BigDecimal(type+"");
+    		
+    		BigDecimal result3 = B5.multiply(w);
+    		final int anserp4b = result3.subtract(result4).intValue();
+    		
 		for (int j = 0; j < bodyView.getChildCount(); j++) {
 			if (bodyView.getChildAt(j) instanceof LinearLayout) {
 				LinearLayout rb = (LinearLayout) bodyView.getChildAt(j);
@@ -823,8 +885,15 @@ Answer ans = getAnswer(B5);
 Answer ans = getAnswer(B5);
     	
     	if (ans != null) {
-    		final double anserp4b = (Double.parseDouble(ans.getAnswerMapArr().get(0).getAnswerText()) * 10000 )- type;
-		
+//    		final double anserp4b = (Double.parseDouble(ans.getAnswerMapArr().get(0).getAnswerText()) * 10000 )- type;
+    		BigDecimal B5 = new BigDecimal(ans.getAnswerMapArr().get(0).getAnswerText());
+    		BigDecimal w = new BigDecimal("10000");
+    		BigDecimal result4 = new BigDecimal(type+"");
+    		
+    		BigDecimal result3 = B5.multiply(w);
+    		final int anserp4b = result3.subtract(result4).intValue();
+    		
+    		BaseLog.v("anserp4b = " + anserp4b);
     		
 		for (int j = 0; j < bodyView.getChildCount(); j++) {
 			if (bodyView.getChildAt(j) instanceof LinearLayout) {
@@ -1161,6 +1230,9 @@ Answer ans = getAnswer(B5);
 								msg.arg2 = sum;
 								msg.what = type;
 
+								BaseLog.v("isreturn = " + isreturn);
+								BaseLog.v("sum = " + sum);
+								BaseLog.v("type = " + type);
 								handler.sendMessage(msg);
 							}
 

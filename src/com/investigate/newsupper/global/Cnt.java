@@ -1,21 +1,21 @@
 ﻿package com.investigate.newsupper.global;
 
 public class Cnt {
-
+	
 	private Cnt() {
-
+	
 	}
-
+	
 	public static final boolean D = true;
-
+	
 	public static int TITLE_HEIGHT = 0;// 标题高度
 	public static int INS_HEIGHT = 0;// 内容高度
 	public static int GRIVEW_COLUMN_NUMS = 2;// 列数
-
+	
 	/**
 	 * 题型
 	 */
-
+	
 	/**
 	 * 单选
 	 */
@@ -48,7 +48,7 @@ public class Cnt {
 	 * 矩阵复选
 	 */
 	public static final int TYPE_MATRIX_CHECK_BOX = 7;
-
+	
 	/**
 	 * 多媒体题型
 	 */
@@ -57,7 +57,7 @@ public class Cnt {
 	 * 分页符
 	 */
 	public static final int TYPE_PAGE = 9;
-
+	
 	public static final String LOGIN_MODE = "offline";
 	public static final String USER_ID = "userId";
 	public static final String AUTHORID = "authorID";
@@ -68,40 +68,40 @@ public class Cnt {
 	public static final String SK = "sk";
 	public static final String Endpoint = "endpoint";
 	public static final String Bucket_Name = "bucket_Name";
-
+	
 	/**
-	 * 
+	 *
 	 */
 	public static final String HEADER = "Header";
-
+	
 	public static final String RADIO_BUTTON = "RadioButton";
-
+	
 	public static final String CHECK_BOX = "CheckBox";
-
+	
 	public static final String DROP_DOWN_LIST = "DropDownList";
-
+	
 	public static final String FREE_TEXT_BOX = "FreeTextBox";
-
+	
 	public static final String FREE_TEXT_AREA = "FreeTextArea";
-
+	
 	public static final String MATRIX_RADIO_BUTTON = "MatrixRadioButton";
-
+	
 	public static final String MATRIX_CHECK_BOX = "MatrixCheckBox";
-
+	
 	public static final String IMAGE = "Image";
 	public static final String PAGE = "Page";
-
+	
 	public static final String POS_CENTER = "center";
 	public static final String POS_LEFT = "left";
 	public static final String POS_RIGHT = "right";
 	public static final String ORIENT_VERTICAL = "vertical";
 	public static final String ORIENT_HORIZONTAL = "horizontal";
-
+	
 	/**
 	 * 多媒体文件的下载路径
 	 */
 	public static final String URL_MEDIA_BASE = "";
-
+	
 	/**
 	 * 选了文本框那一项,但是没填内容
 	 */
@@ -110,21 +110,21 @@ public class Cnt {
 	 * 选了文本框字典匹配后停止
 	 */
 	public static final int STATE_CLASS_STOP = -2;
-
+	
 	/**
 	 * 答题成功
 	 */
 	public static final int STATE_SUCCESS = 100;
-
+	
 	public static final int STATE_ALL = 5;
-
+	
 	// public static final int STATE_SYB = 6;
-
+	
 	/**
 	 * XML文件类型
 	 */
 	public static final int FILE_TYPE_XML = 1;
-
+	
 	/**
 	 * PNG文件类型
 	 */
@@ -133,7 +133,7 @@ public class Cnt {
 	 * PNG文件类型（隐藏拍照）
 	 */
 	public static final int FILE_TYPE_HIDE_PNG = 5;
-
+	
 	/**
 	 * MP3文件类型
 	 */
@@ -141,9 +141,9 @@ public class Cnt {
 	/**
 	 * MP4文件类型 摄像
 	 */
-
+	
 	public static final int FILE_TYPE_MP4 = 4;
-
+	
 	/**
 	 * 问卷没有访问, 未访问
 	 */
@@ -156,7 +156,7 @@ public class Cnt {
 	 * 完成
 	 */
 	public static final int VISIT_STATE_COMPLETED = 1;
-
+	
 	/**
 	 * 上传状态, 没动过
 	 */
@@ -165,23 +165,23 @@ public class Cnt {
 	 * 没有上传过
 	 */
 	public static final int UPLOAD_STATE_UNUPLOAD = 0;
-
+	
 	/**
 	 * 上传状态,已经传过
 	 */
 	public static final int UPLOAD_STATE_UPLOADED = 1;
-
+	
 	/**
 	 * 1是访问专家 2是IPSOS 3是IMS 4是美国服务器 5是农业银行
 	 */
 	public static int appVersion = 1;
 	public static String ASSIGN_DATE = "2017-01-01 00:00";//定时上传日期
-
+	
 	// /**
 	// * 免费地址
 	// */
 	public static String FREE_REGIST_URL = "http://www.survey-expert.cn/FreeReg.asp";
-	public static String CONFIG_XML_NAME = "app_dapsurvey_ep";
+	public static String CONFIG_XML_NAME = "app_dapsurvey_shzs";
 	public static String LOGIN_URL = "http://free.dapchina.cn/alisoft/OfflineLogin.asp";
 	public static String UPLOAD_URL = "http://free.dapchina.cn/alisoft/OfflineUpload.aspx";
 	//ftp地址
@@ -231,11 +231,11 @@ public class Cnt {
 	
 	//名单提交和修改的接口
 	public static String OfflinePanel = "http://free.dapchina.cn/alisoft/OfflinePanel.asp";
-		
+	
 	//删除名单接口
 	public static String DeletePanel = "http://free.dapchina.cn/alisoft/OfflineSysDeletePanel.asp";
 	
-	//同步答案 
+	//同步答案
 	public static String OfflineSysFeedAnswer = "http://free.dapchina.cn/alisoft/OfflineSysFeedAnswer.asp";
 	
 	
@@ -252,10 +252,10 @@ public class Cnt {
 	// public static String APP_URL =
 	// "https://www.ipsoschina.cn/config/appnew_dapsurvey.xml";
 	public static int PORT = 7878;
-
+	
 	/**
 	 * 美国改变域名的方法
-	 * 
+	 *
 	 * @param isFree
 	 *            是否是免费付费
 	 * @param ip
@@ -317,10 +317,10 @@ public class Cnt {
 	// // "http://www.dapchina.cn/newsurvey/alisoft/DownloadUser1.asp";
 	// }
 	// }
-
+	
 	/**
 	 * 改变域名的方法
-	 * 
+	 *
 	 * @param isFree
 	 *            是否是免费付费
 	 * @param ip
@@ -334,15 +334,15 @@ public class Cnt {
 		}
 		String protocol = "http://";
 		switch (protocolType) {// 判断传输协议
-		case 0:// 如果为0则不变http://
-			protocol = "http://";
-			break;
-		case 1:// 如果为1则是https协议
-			protocol = "https://";
-			break;
-
-		default:
-			break;
+			case 0:// 如果为0则不变http://
+				protocol = "http://";
+				break;
+			case 1:// 如果为1则是https协议
+				protocol = "https://";
+				break;
+			
+			default:
+				break;
 		}
 		// 兼容美国服务器并且是付费，否则还是走http
 		if (4 == Cnt.appVersion) {
@@ -413,26 +413,26 @@ public class Cnt {
 		//删除名单接口
 		DeletePanel = protocol + ip + "/alisoft/OfflineSysDeletePanel.asp";
 		
-		//同步答案 
+		//同步答案
 		OfflineSysFeedAnswer = protocol + ip + "/alisoft/OfflineSysFeedAnswer.asp";
 		
 		if (isFree) {
 			// 下载试用问卷的地址
 			DOWN_FREE_SURVEY_URL = protocol + ip + "/alisoft/OfflineEmpower.asp";
-
+			
 		} else {
-
+		
 		}
 	}
-
+	
 	public static String CLIENT_SERVER_IP = "";
-
+	
 	public static boolean LOC_SERVICE_START = false;
 	public static final int CLIENT_SERVER_PORT = 6868;
-
+	
 	// ftp用户名 密码 和端口
 	public static final String ftpName = "newupload";
 	public static final String ftpPwd = "dapchina";
 	public static final int ftpPort = 21;
-
+	
 }

@@ -158,6 +158,7 @@ import com.investigate.newsupper.intervention.InterventionEP2;
 import com.investigate.newsupper.intervention.InterventionEP3;
 import com.investigate.newsupper.intervention.InterventionEP4;
 import com.investigate.newsupper.intervention.InterventionQjq;
+import com.investigate.newsupper.intervention.Interventionutil;
 import com.investigate.newsupper.listener.OnActionListener;
 import com.investigate.newsupper.main.MainService;
 import com.investigate.newsupper.pageview.MenuHorizontalScrollView;
@@ -5736,7 +5737,8 @@ public class NativeModeActivity extends BaseActivity implements
 	 */
 	private void nextPage(boolean isNoValidate) {
 
-		int state = getQuestionAnswer(MSG_NEXT, isNoValidate);
+		 int state = getQuestionAnswer(MSG_NEXT, isNoValidate);
+	        
 		sum = 0;
 		// System.out.println("state--------->" + state);
 		// 为false就验证 不让过。
@@ -5781,10 +5783,20 @@ public class NativeModeActivity extends BaseActivity implements
 				setTopClick(true);
 			}
 		} else {
+			boolean result = Interventionutil.getInstance(Integer.parseInt(feed.getSurveyId()), ma, feed.getUuid())
+	                .nextpage(q.qIndex,vs,NativeModeActivity.this,feed.getUuid());
+
+
+	        if (!result) {
+	            setTopClick(true);
+	            return;
+	        }
 			// 不用查重就往下走
 			loadnextpage();
 		}
 
+		
+        
 		BaseLog.d("下一页----" + q.getHidePhotoCheck());
 
 	}
@@ -10719,7 +10731,10 @@ public class NativeModeActivity extends BaseActivity implements
 			}
 
 
-		}
+		}else{
+            Interventionutil.getInstance(Integer.parseInt(q.surveyId), ma, feed.getUuid())
+            .createQuestionBodyViewBefore(q.qIndex, vs);
+}
 
 		
 

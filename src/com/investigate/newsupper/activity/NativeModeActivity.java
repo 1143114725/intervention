@@ -153,11 +153,8 @@ import com.investigate.newsupper.global.TaskType;
 import com.investigate.newsupper.global.textsize.TextSizeManager;
 import com.investigate.newsupper.global.textsize.UITextView;
 import com.investigate.newsupper.intervention.Intervention;
-import com.investigate.newsupper.intervention.InterventionEP1;
-import com.investigate.newsupper.intervention.InterventionEP2;
-import com.investigate.newsupper.intervention.InterventionEP3;
-import com.investigate.newsupper.intervention.InterventionEP4;
 import com.investigate.newsupper.intervention.InterventionQjq;
+import com.investigate.newsupper.intervention.InterventionQjqSecond;
 import com.investigate.newsupper.intervention.Interventionutil;
 import com.investigate.newsupper.listener.OnActionListener;
 import com.investigate.newsupper.main.MainService;
@@ -180,12 +177,10 @@ import com.investigate.newsupper.util.DialogUtil;
 import com.investigate.newsupper.util.FileUtil;
 import com.investigate.newsupper.util.HtmlTagHandler;
 import com.investigate.newsupper.util.ImsIntervetion;
-import com.investigate.newsupper.util.ListUtils;
 import com.investigate.newsupper.util.MD5;
 import com.investigate.newsupper.util.NetService;
 import com.investigate.newsupper.util.NetUtils;
 import com.investigate.newsupper.util.Publisher;
-import com.investigate.newsupper.util.SpUtil;
 import com.investigate.newsupper.util.Publisher.Subscriber;
 import com.investigate.newsupper.util.Publisher.SubscriberKey;
 import com.investigate.newsupper.util.SDCardUtils;
@@ -217,10 +212,6 @@ public class NativeModeActivity extends BaseActivity implements
 	/********************************************************/
 	// 干预工具类
 	private Intervention intervention;
-	private InterventionEP1 interventionEP1;
-	private InterventionEP2 interventionEP2;
-	private InterventionEP3 interventionEP3;
-	private InterventionEP4 interventionEP4;
 	// 需要干预的问卷id
 	private static final String SURVEY_ID = "4093";
 	
@@ -2444,123 +2435,121 @@ public class NativeModeActivity extends BaseActivity implements
 		// 上一页
 		case R.id.bq_btn:
 
-			// new UpLoadFileTask(feed, 2, MSG_WRITE).execute(
-			// ma.userId,
-			// MD5.Md5Pwd(ma.cfg.getString(Cnt.USER_PWD, "")),
-			// feed.getSurveyId(), feed.getPath(), feed.getName(),
-			// Cnt.UPLOAD_URL);
-			// new XmlTask(MSG_WRITE, "1").execute();
+			backpageClick();
 
-			// 返回密码
-			if (!isJumpTest) {// 上一页可用
-				if (!Util.isEmpty(backPassword)) {
-					LayoutInflater inflater = getLayoutInflater();
-					View layout = inflater.inflate(R.layout.last_dialog_layout,
-							null);
-					final EditText et = (EditText) layout
-							.findViewById(R.id.edit_text_dialog);
-					new AlertDialog.Builder(NativeModeActivity.this,
-							AlertDialog.THEME_HOLO_LIGHT)
-							.setTitle("返回请输入密码")
-							.setView(layout)
-							.setCancelable(false)
-							.setPositiveButton("确定",
-									new DialogInterface.OnClickListener() {
-										public void onClick(
-												DialogInterface dialog,
-												int which) {
-											HideSoftInput(et.getWindowToken());
-											String psdword = et.getText()
-													.toString();
-											if (backPassword.trim().equals(
-													psdword.trim())) {
-												backPage();
-											} else {
-												Toasts.makeText(
-														NativeModeActivity.this,
-														"密码错误", 1000).show();
-											}
-										}
-									})
-							.setNegativeButton("取消",
-									new DialogInterface.OnClickListener() {
-										@Override
-										public void onClick(
-												DialogInterface dialog,
-												int which) {
-											HideSoftInput(et.getWindowToken());
-											dialog.dismiss();
-										}
-									}).show();
-
-				} else {
-					if (isComplete) {// 如果加载完成
-						setTopClick(false);
-						// isComplete = false;
-						if (isRecording) {// 如果是正在录音则等待0.1秒
-							closeQRecord();
-							new Handler().postDelayed(new Runnable() {
-								public void run() {
-									// execute the task
-									backPage();
-								}
-							}, 100);
-						} else {// 否则直接下一页
-							backPage();
-						}
-					}
-				}
-			}
+			
 			break;
 		// 下一页
 		case R.id.nq_btn:
 
-			// 此处的干预是阻止用户下一页的操作
-			BaseLog.v("INTERVENTION_Y8 SURVEY_ID" + SURVEY_ID);
-			BaseLog.v("INTERVENTION_Y8 surveyId" + q.surveyId);
-			BaseLog.v("INTERVENTION_Y8 ");
-			BaseLog.v("INTERVENTION_Y8 INTERVENTION_Y8" + INTERVENTION_Y8);
-			BaseLog.v("INTERVENTION_Y8 q.qIndex" + q.qIndex);
-			
-			
+			nextpageClick();
 
-			if (SURVEY_ID.equals(q.surveyId)) {
-				
-
-				if (q.qIndex == INTERVENTION_Y8) {
-					BaseLog.v("INTERVENTION_Y8");
-					if (! intervention.sortoption(bodyView,NativeModeActivity.this)) {
-						return;
-					}
-				}
-				if (q.qIndex == INTERVENTION_Q12) {
-					if (! intervention.sortoption(bodyView,NativeModeActivity.this)) {
-						return;
-					}
-				}
-			}
-			if (Util.StopTimeClick(q.qStopTime)) {
-				Toasts.makeText(NativeModeActivity.this,
-						"您还有" + Util.toTime + "秒的做答时间", Toast.LENGTH_SHORT)
-						.show();
-				return;
-			} else if (isComplete) {// 如果加载完成
-				// isComplete = false;
-				setTopClick(false);
-				System.out.println("falsefalsefalsefalsefalsefalsefalsefalse");
-				if (isRecording) {// 如果是正在录音则等待0.1秒
-					closeQRecord();
-					new Handler().postDelayed(new Runnable() {
-						public void run() {
-							// execute the task
-							nextPage(false);
-						}
-					}, 100);
-				} else {// 否则直接下一页
-					nextPage(false);
-				}
-			}
+			
 			break;
+		}
+	}
+
+	private void backpageClick() {
+		// TODO Auto-generated method stub
+		// 返回密码
+					if (!isJumpTest) {// 上一页可用
+						if (!Util.isEmpty(backPassword)) {
+							LayoutInflater inflater = getLayoutInflater();
+							View layout = inflater.inflate(R.layout.last_dialog_layout,
+									null);
+							final EditText et = (EditText) layout
+									.findViewById(R.id.edit_text_dialog);
+							new AlertDialog.Builder(NativeModeActivity.this,
+									AlertDialog.THEME_HOLO_LIGHT)
+									.setTitle("返回请输入密码")
+									.setView(layout)
+									.setCancelable(false)
+									.setPositiveButton("确定",
+											new DialogInterface.OnClickListener() {
+												public void onClick(
+														DialogInterface dialog,
+														int which) {
+													HideSoftInput(et.getWindowToken());
+													String psdword = et.getText()
+															.toString();
+													if (backPassword.trim().equals(
+															psdword.trim())) {
+														backPage();
+													} else {
+														Toasts.makeText(
+																NativeModeActivity.this,
+																"密码错误", 1000).show();
+													}
+												}
+											})
+									.setNegativeButton("取消",
+											new DialogInterface.OnClickListener() {
+												@Override
+												public void onClick(
+														DialogInterface dialog,
+														int which) {
+													HideSoftInput(et.getWindowToken());
+													dialog.dismiss();
+												}
+											}).show();
+
+						} else {
+							if (isComplete) {// 如果加载完成
+								setTopClick(false);
+								// isComplete = false;
+								if (isRecording) {// 如果是正在录音则等待0.1秒
+									closeQRecord();
+									new Handler().postDelayed(new Runnable() {
+										public void run() {
+											// execute the task
+											backPage();
+										}
+									}, 100);
+								} else {// 否则直接下一页
+									backPage();
+								}
+							}
+						}
+					}
+	}
+
+	private void nextpageClick() {
+		// TODO Auto-generated method stub
+		if (SURVEY_ID.equals(q.surveyId)) {
+			
+
+			if (q.qIndex == INTERVENTION_Y8) {
+				BaseLog.v("INTERVENTION_Y8");
+				if (! intervention.sortoption(bodyView,NativeModeActivity.this)) {
+					return;
+				}
+			}
+			if (q.qIndex == INTERVENTION_Q12) {
+				if (! intervention.sortoption(bodyView,NativeModeActivity.this)) {
+					return;
+				}
+			}
+		}
+		if (Util.StopTimeClick(q.qStopTime)) {
+			Toasts.makeText(NativeModeActivity.this,
+					"您还有" + Util.toTime + "秒的做答时间", Toast.LENGTH_SHORT)
+					.show();
+			return;
+		} else if (isComplete) {// 如果加载完成
+			// isComplete = false;
+			setTopClick(false);
+			System.out.println("falsefalsefalsefalsefalsefalsefalsefalse");
+			if (isRecording) {// 如果是正在录音则等待0.1秒
+				closeQRecord();
+				new Handler().postDelayed(new Runnable() {
+					public void run() {
+						// execute the task
+						nextPage(false);
+					}
+				}, 100);
+			} else {// 否则直接下一页
+				nextPage(false);
+			}
 		}
 	}
 
@@ -6030,6 +6019,18 @@ public class NativeModeActivity extends BaseActivity implements
 		 */
 		q = qs.get(realIndex);
 		
+		if (Integer.parseInt(feed.getSurveyId()) == Interventionutil.SURVEY_ID_QJQ_SEC) {
+			if (q.qIndex == Interventionutil.INTERVENTION_QJQ_K25_SEC) {
+				int result = InterventionQjqSecond.getK20SumK24(ma, feed.getUuid());
+				q.qTitle = "您的购车价格/预算是【::@@11-0::@@  ::@@15-0::@@】元，增加配置后的价格达到" +
+						"<font color=#ff0000>【" + result + "】</font>元，" +
+						"超过了购车价格/预算，请问您是否还愿意购买这个版型呢?";
+			}
+			if (q.qIndex == Interventionutil.INTERVENTION_QJQ_O5_SEC) {
+				int result = InterventionQjqSecond.getO5Result(ma, feed.getUuid());
+				q.qTitle = "相对于您最初的预算，您超支了<font color=#ff0000>【"+ result +"】</font>RMB的金额。请问您是否愿意放宽预算以足够购买这样一款车?(单选)";
+			}
+		}
 		if (Integer.parseInt(feed.getSurveyId()) == 4112) {
 			
 			if (q.qIndex == 230) {
@@ -10755,35 +10756,7 @@ public class NativeModeActivity extends BaseActivity implements
 		}
 
 		// 此处的干预是为了更改用户可见UI
-		
-		if (SURVEY_ID_EP1.equals(q.surveyId)) {
-			
-			if (interventionEP1 == null) {
-				interventionEP1 = new InterventionEP1(Integer.parseInt(feed
-						.getSurveyId()), ma, feed.getUuid());
-			}
-			
-				interventionEP1.setansText(q.qIndex,bodyView);	
-			
-		}else if(SURVEY_ID_EP2.equals(q.surveyId)){
-			if (interventionEP2 == null) {
-				interventionEP2 = new InterventionEP2(Integer.parseInt(feed
-						.getSurveyId()), ma, feed.getUuid());
-			}
-			interventionEP2.setansText(q.qIndex,bodyView);	
-		}else if(SURVEY_ID_EP3.equals(q.surveyId)){
-			if (interventionEP3 == null) {
-				interventionEP3 = new InterventionEP3(Integer.parseInt(feed
-						.getSurveyId()), ma, feed.getUuid());
-			}
-			interventionEP3.setansText(q.qIndex,bodyView);	
-		}else if(SURVEY_ID_EP4.equals(q.surveyId)){
-			if (interventionEP4 == null) {
-				interventionEP4 = new InterventionEP4(Integer.parseInt(feed
-						.getSurveyId()), ma, feed.getUuid());
-			}
-			interventionEP4.setansText(q.qIndex,bodyView);	
-		}else if (SURVEY_ID.equals(q.surveyId)) {
+		if (SURVEY_ID.equals(q.surveyId)) {
 			if (intervention == null) {
 				intervention = new Intervention(Integer.parseInt(feed
 						.getSurveyId()), ma, feed.getUuid());
@@ -10801,9 +10774,108 @@ public class NativeModeActivity extends BaseActivity implements
 			Interventionutil.getInstance(Integer.parseInt(q.surveyId), ma, feed.getUuid())
 											.createQuestionBodyViewBefore(q.qIndex, vs);
 		}
+		
+		if ((""+Interventionutil.SURVEY_ID_QJQ_SEC).equals(q.surveyId)){
+			if (q.qIndex == Interventionutil.INTERVENTION_QJQ_K21_SEC) {
+				InterventionQjqSecond.setItemText(bodyView,NativeModeActivity.this, ma, feed.getUuid());
+//				cleraVS();
+//				if(operType == MSG_NEXT){
+//					index ++;
+//					createQuestionBodyView(MSG_NEXT);
+//				}else if(operType == MSG_PRE){
+//					index --;
+//					createQuestionBodyView(MSG_PRE);
+//				}
+				
+			}
+			
+			if (q.qIndex == Interventionutil.INTERVENTION_QJQ_K25LK_SEC) {
+				InterventionQjqSecond.setEditTextK25LK(bodyView,NativeModeActivity.this, ma, feed.getUuid());
+//				cleraVS();
+//				if(operType == MSG_NEXT){
+//					index ++;
+//					createQuestionBodyView(MSG_NEXT);
+//				}else if(operType == MSG_PRE){
+//					index --;
+//					createQuestionBodyView(MSG_PRE);
+//				}
+			}
+			
+			if (q.qIndex == Interventionutil.INTERVENTION_QJQ_O4ab_SEC) {
+				InterventionQjqSecond.setItemTextO4ab(bodyView, ma, feed.getUuid());
+			}
+			
+			if (q.qIndex == Interventionutil.INTERVENTION_QJQ_O4bc_SEC) {
+				InterventionQjqSecond.setItemTextO4bc(bodyView, ma, feed.getUuid());
+			}
+			
+			if (q.qIndex == Interventionutil.INTERVENTION_QJQ_O4bd_SEC) {
+				InterventionQjqSecond.setItemTextO4bd(bodyView, ma, feed.getUuid());
+			}
+			
+			if (q.qIndex == Interventionutil.INTERVENTION_QJQ_O4e1_SEC) {
+				InterventionQjqSecond.setItemTextO4e1(bodyView, ma, feed.getUuid());
+				
+//				cleraVS();
+//				if(operType == MSG_NEXT){
+//					index ++;
+//					createQuestionBodyView(MSG_NEXT);
+//				}else if(operType == MSG_PRE){
+//					index --;
+//					createQuestionBodyView(MSG_PRE);
+//				}
+			}
+			
+			if (q.qIndex == Interventionutil.INTERVENTION_QJQ_O5_SEC) {
+				int result = InterventionQjqSecond.getO5Result(ma,
+						feed.getUuid());
+
+				if (operType == MSG_NEXT) {
+					if (result > 0) {
+
+					} else {
+						cleraVS();
+						index++;
+						createQuestionBodyView(MSG_NEXT);
+					}
+
+				} else if (operType == MSG_PRE) {
+					if (result > 0) {
+
+					} else {
+						cleraVS();
+						index--;
+						createQuestionBodyView(MSG_PRE);
+					}
+
+				}
+			}
+			
+			if (q.qIndex == Interventionutil.INTERVENTION_QJQ_U0e1_SEC) {
+				InterventionQjqSecond.setItemTextU0e1(Interventionutil.INTERVENTION_QJQ_U0e_SEC, bodyView, ma, feed.getUuid());
+
+			
+			}
+			if (q.qIndex == Interventionutil.INTERVENTION_QJQ_U0f1_SEC) {
+				InterventionQjqSecond.setItemTextU0e1(Interventionutil.INTERVENTION_QJQ_U0f_SEC, bodyView, ma, feed.getUuid());
+
+
+			
+			}
+			
+		
+			
+		}
 
 		
 
+	}
+	private void cleraVS(){
+		/*** 题组随机结束 */
+		bodyView.removeAllViews();
+		// 单复选矩阵固定
+		bodyView_new.removeAllViews();
+		vs.clear();
 	}
 
 	// 记录答到的题目索引

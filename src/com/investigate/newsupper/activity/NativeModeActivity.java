@@ -10827,11 +10827,12 @@ public class NativeModeActivity extends BaseActivity implements
 			}
 			
 			if (q.qIndex == Interventionutil.INTERVENTION_QJQ_O5_SEC) {
-				int result = InterventionQjqSecond.getO5Result(ma,
+				boolean result = InterventionQjqSecond.isO5Result(ma,
 						feed.getUuid());
 
+				BaseLog.v("Interventionutil--"  +result);
 				if (operType == MSG_NEXT) {
-					if (result > 0) {
+					if (result) {
 
 					} else {
 						cleraVS();
@@ -10840,7 +10841,7 @@ public class NativeModeActivity extends BaseActivity implements
 					}
 
 				} else if (operType == MSG_PRE) {
-					if (result > 0) {
+					if (result) {
 
 					} else {
 						cleraVS();

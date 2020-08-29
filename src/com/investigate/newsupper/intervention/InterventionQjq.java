@@ -108,6 +108,9 @@ public class InterventionQjq {
 			// 获取Q14的答案
 			Answer ansQ14 = getAnswer(insertindex);
 
+if (ansQ14 == null) {
+	return;
+}
 			BaseLog.v("ansQ14 =" + ansQ14.getAnswerMapStr());
 
 			// 根据Q14的答案插入O车的位置
